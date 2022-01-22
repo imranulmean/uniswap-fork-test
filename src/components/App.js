@@ -418,19 +418,19 @@ class App extends Component {
   }
 ]
     const accounts = await web3.eth.getAccounts()
-    console.log(accounts);    
-    this.setState({
-      account:{
-        accountId:accounts[0]
-      }
-    });
-
-
+    
     // Load NFT smart contract data
 
       const contract = new web3.eth.Contract(abi, address)
       console.log(await contract);
-      console.log(await contract.methods.balanceOf(accounts[0]).call());        
+      console.log(await contract.methods.balanceOf(accounts[0]).call());
+      const totalBanalce=await contract.methods.balanceOf(accounts[0]).call()      
+    this.setState({
+      account:{
+        accountId:accounts[0],
+        totalBanalce:totalBanalce
+      }
+    });      
       //contract.methods.safeMint(accounts[0]).send({ from: accounts[0] })
       
       //this.setState({ daiToken })
@@ -516,7 +516,8 @@ class App extends Component {
     // }
 
     return (
-       <p>Hello workd {this.state.account.accountId}</p>
+       <p>Hello workd {this.state.account.accountId}... Total Balance: {this.state.account.totalBanalce}</p>
+
     );
   }
 }
